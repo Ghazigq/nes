@@ -13,7 +13,7 @@
 #include "rtconfig.h"
 
 #ifndef PKG_NES_FRAME_SKIP
-#define PKG_NES_FRAME_SKIP  2
+    #define PKG_NES_FRAME_SKIP  2
 #endif
 
 //#define PKG_NES_DOUBLE_FRAMEBUFFER

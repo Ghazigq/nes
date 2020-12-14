@@ -16,7 +16,7 @@
 /*        InfoNES_SoundInit() : Sound Emulation Initialize           */
 /*                                                                   */
 /*===================================================================*/
-void InfoNES_SoundInit( void )
+void InfoNES_SoundInit(void)
 {
 //  sound_fd = 0;
 }
@@ -28,11 +28,11 @@ void InfoNES_SoundInit( void )
 /*        InfoNES_SoundOpen() : Sound Open                           */
 /*                                                                   */
 /*===================================================================*/
-int InfoNES_SoundOpen( int samples_per_sync, int sample_rate )
+int InfoNES_SoundOpen(int samples_per_sync, int sample_rate)
 {
 
-  /* Successful */
-  return 1;
+    /* Successful */
+    return 1;
 }
 
 /*===================================================================*/
@@ -40,7 +40,7 @@ int InfoNES_SoundOpen( int samples_per_sync, int sample_rate )
 /*        InfoNES_SoundClose() : Sound Close                         */
 /*                                                                   */
 /*===================================================================*/
-void InfoNES_SoundClose( void )
+void InfoNES_SoundClose(void)
 {
 //  if ( sound_fd )
 //  {
@@ -53,7 +53,7 @@ void InfoNES_SoundClose( void )
 /*            InfoNES_SoundOutput() : Sound Output 5 Waves           */
 /*                                                                   */
 /*===================================================================*/
-void InfoNES_SoundOutput( int samples, BYTE *wave1, BYTE *wave2, BYTE *wave3, BYTE *wave4, BYTE *wave5 )
+void InfoNES_SoundOutput(int samples, BYTE *wave1, BYTE *wave2, BYTE *wave3, BYTE *wave4, BYTE *wave5)
 {
 
 }

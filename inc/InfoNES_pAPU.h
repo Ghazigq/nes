@@ -16,13 +16,13 @@
 /*  Macros                                                           */
 /*-------------------------------------------------------------------*/
 
-/*-------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------*/
 /* Rectangle Wave #0                                                 */
 /* Reg0: 0-3=Volume, 4=Envelope, 5=Hold, 6-7=Duty Cycle              */
 /* Reg1: 0-2=sweep shifts, 3=sweep inc, 4-6=sweep length, 7=sweep on */
 /* Reg2: 8 bits of freq                                              */
 /* Reg3: 0-2=high freq, 7-4=vbl length counter                       */
-/*-------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------*/
 #define ApuC1Vol            ( ApuC1a & 0x0f )
 #define ApuC1Env            ( ApuC1a & 0x10 )
 #define ApuC1Hold           ( ApuC1a & 0x20 )
@@ -31,18 +31,18 @@
 #define ApuC1EnvDelay       ( ( ApuC1a & 0x0f ) + 1 )
 #define ApuC1SweepOn        ( ApuC1b & 0x80 )
 #define ApuC1SweepIncDec    ( ApuC1b & 0x08 )
-#define ApuC1SweepShifts    ( ApuC1b & 0x07 ) 
+#define ApuC1SweepShifts    ( ApuC1b & 0x07 )
 //#define ApuC1SweepDelay     ( ( ( ( WORD )ApuC1b & 0x70 ) >> 4 ) << 8 )
 #define ApuC1SweepDelay     ( ( ( ApuC1b & 0x70 ) >> 4 ) + 1 )
 #define ApuC1FreqLimit      ( ApuFreqLimit[ ( ApuC1b & 0x07 ) ] )
 
-/*-------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------*/
 /* Rectangle Wave #1                                                 */
 /* Reg0: 0-3=Volume, 4=Envelope, 5=Hold, 6-7=Duty Cycle              */
 /* Reg1: 0-2=sweep shifts, 3=sweep inc, 4-6=sweep length, 7=sweep on */
 /* Reg2: 8 bits of freq                                              */
 /* Reg3: 0-2=high freq, 7-4=vbl length counter                       */
-/*-------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------*/
 #define ApuC2Vol            ( ApuC2a & 0x0f )
 #define ApuC2Env            ( ApuC2a & 0x10 )
 #define ApuC2Hold           ( ApuC2a & 0x20 )
@@ -51,28 +51,28 @@
 #define ApuC2EnvDelay       ( ( ApuC2a & 0x0f ) + 1 )
 #define ApuC2SweepOn        ( ApuC2b & 0x80 )
 #define ApuC2SweepIncDec    ( ApuC2b & 0x08 )
-#define ApuC2SweepShifts    ( ApuC2b & 0x07 ) 
+#define ApuC2SweepShifts    ( ApuC2b & 0x07 )
 //#define ApuC2SweepDelay     ( ( ( ( WORD )ApuC2b & 0x70 ) >> 4 ) << 8 )
 #define ApuC2SweepDelay     ( ( ( ApuC2b & 0x70 ) >> 4 ) + 1 )
 #define ApuC2FreqLimit      ( ApuFreqLimit[ ( ApuC2b & 0x07 ) ] )
 
-/*-------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------*/
 /* Triangle Wave                                                     */
 /* Reg0: 7=Holdnote, 6-0=Linear Length Counter                       */
 /* Reg2: 8 bits of freq                                              */
 /* Reg3: 0-2=high freq, 7-4=vbl length counter                       */
-/*-------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------*/
 #define ApuC3Holdnote       ( ApuC3a & 0x80 )
 #define ApuC3LinearLength   ( ( (WORD)ApuC3a & 0x7f ) << 6 )
 #define ApuC3LengthCounter  ( ApuAtl[ ( ( ApuC3d & 0xf8) >> 3 ) ] )
 #define ApuC3Freq           ( ( ( (WORD)ApuC3d & 0x07) << 8) + ApuC3c )
 
-/*-------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------*/
 /* White Noise Channel                                               */
 /* Reg0: 0-3=Volume, 4=Envelope, 5=Hold                              */
 /* Reg2: 7=Small(93byte) sample, 3-0=Freq Lookup                     */
 /* Reg3: 7-3=vbl length counter                                      */
-/*-------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------*/
 //#define ApuC4Vol            ( ( ApuC4a & 0x0f ) | ( ( ApuC4a & 0x0f ) << 4 ) )
 #define ApuC4Vol            ( ApuC4a & 0x0f )
 //#define ApuC4EnvDelay       ( ( WORD )( ApuC4a & 0x0f ) << 8 )
@@ -84,19 +84,19 @@
 //#define ApuC4LengthCounter  ( ApuAtl[ ( ( ApuC4d & 0xf8 ) >> 3 ) ] )
 #define ApuC4LengthCounter  ( ApuAtl[ ( ApuC4d >> 3 ) ] << 1 )
 
-/*-------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------*/
 /* DPCM Channel                                                      */
 /* Reg0: 0-3=Frequency, 6=Looping                                    */
 /* Reg1: 0-6=DPCM Value                                              */
 /* Reg2: 0-7=Cache Addr                                              */
 /* Reg3: 0-7=Cache DMA Length                                        */
-/*-------------------------------------------------------------------*/ 
+/*-------------------------------------------------------------------*/
 #if 0
-#define ApuC5Freq           ( ApuDpcmCycles[ ( ApuC5a & 0x0F ) ] )
-#define ApuC5Looping        ( ApuC5a & 0x40 )
-#define ApuC5DpcmValue      ( ( ApuC5b & 0x7F ) >> 1 )
-#define ApuC5CacheAddr      ( 0xc000 + (WORD)(ApuC5c << 6) )
-#define ApuC5CacheDmaLength ( ( ( ApuC5d << 4 ) + 1 ) << 3 )
+    #define ApuC5Freq           ( ApuDpcmCycles[ ( ApuC5a & 0x0F ) ] )
+    #define ApuC5Looping        ( ApuC5a & 0x40 )
+    #define ApuC5DpcmValue      ( ( ApuC5b & 0x7F ) >> 1 )
+    #define ApuC5CacheAddr      ( 0xc000 + (WORD)(ApuC5c << 6) )
+    #define ApuC5CacheDmaLength ( ( ( ApuC5d << 4 ) + 1 ) << 3 )
 #endif
 
 /*-------------------------------------------------------------------*/
@@ -105,10 +105,11 @@
 
 #define APU_EVENT_MAX   1000//15000
 
-struct ApuEvent_t {
-  long time;
-  BYTE type;
-  BYTE data;
+struct ApuEvent_t
+{
+    long time;
+    BYTE type;
+    BYTE data;
 };
 
 #define APUET_MASK      0xfc
@@ -180,7 +181,7 @@ extern BYTE  ApuC1Atl;
 /*  Rectangle Wave #2 resources                                      */
 /*-------------------------------------------------------------------*/
 
-extern BYTE  ApuC2Atl;   
+extern BYTE  ApuC2Atl;
 
 /*-------------------------------------------------------------------*/
 /*  Triangle Wave resources                                          */

@@ -17,23 +17,24 @@
 #ifndef PKG_NES_DFS
 
 static int file_index = 0;
-static const nesGameFile* file_addr = 0;
+static const nesGameFile *file_addr = 0;
 
-const nesGameFile gameFileList[4] = {
+const nesGameFile gameFileList[4] =
+{
     {"SuperMario",      acSuperMario},
     {"CatAndMouse",     acCatAndMouse},
     {"Tanks",           acTanks},
     {"MacrossSeries",   acMacrossSeries},
 };
 
-int nesOpenFile(const char * fileName)
+int nesOpenFile(const char *fileName)
 {
     int i = 0;
 
     file_index = 0;
-    for(i = 0;i < sizeof(gameFileList) / sizeof(gameFileList[0]); i ++)
+    for (i = 0; i < sizeof(gameFileList) / sizeof(gameFileList[0]); i ++)
     {
-        if(strcmp(gameFileList[i].gameName, fileName) == 0)
+        if (strcmp(gameFileList[i].gameName, fileName) == 0)
         {
             file_addr = &gameFileList[i];
             return 0;
@@ -47,12 +48,12 @@ int nesReadFile(void *buf, unsigned int len, unsigned short num)
 {
     volatile char *p = buf;
 
-    if(!file_addr || !file_addr->gameFileSrc)
+    if (!file_addr || !file_addr->gameFileSrc)
         return -1;
 
-    for (int i = 0; i < num; i++ )
+    for (int i = 0; i < num; i++)
     {
-        memcpy((char *)p, file_addr->gameFileSrc + file_index , len);
+        memcpy((char *)p, file_addr->gameFileSrc + file_index, len);
         file_index += len;
         p += len;
     }
@@ -67,9 +68,9 @@ int nesCloseFile(void)
     return 0;
 }
 
-char * nesGetFileName(int index)
+char *nesGetFileName(int index)
 {
-    if(index < 0 || index >= sizeof(gameFileList) / sizeof(gameFileList[0]))
+    if (index < 0 || index >= sizeof(gameFileList) / sizeof(gameFileList[0]))
         return NULL;
     else
         return (char *)gameFileList[index].gameName;
@@ -77,7 +78,7 @@ char * nesGetFileName(int index)
 
 void nesListFile(void)
 {
-    for(int i = 0;i < sizeof(gameFileList) / sizeof(gameFileList[0]); i ++)
+    for (int i = 0; i < sizeof(gameFileList) / sizeof(gameFileList[0]); i ++)
         printf("%d\t%s\n", i, gameFileList[i].gameName);
 }
 
@@ -87,10 +88,10 @@ void nesListFile(void)
 
 static int fd = -1;
 
-int nesOpenFile(const char * fileName)
+int nesOpenFile(const char *fileName)
 {
     fd = open(fileName, O_RDONLY);
-    if ( fd < 0 )
+    if (fd < 0)
     {
         printf("file open failed!");
         return -1;
@@ -103,10 +104,10 @@ int nesReadFile(void *buf, unsigned int len, unsigned short num)
 {
     char *p = buf;
 
-    if(fd < 0)
+    if (fd < 0)
         return -1;
 
-    for (int i = 0; i < num; i++ )
+    for (int i = 0; i < num; i++)
     {
         read(fd, p, len);
         p += len;
@@ -117,13 +118,13 @@ int nesReadFile(void *buf, unsigned int len, unsigned short num)
 
 int nesCloseFile(void)
 {
-    if(fd >= 0)
+    if (fd >= 0)
         close(fd);
     fd = -1;
     return 0;
 }
 
-char * nesGetFileName(int index)
+char *nesGetFileName(int index)
 {
     //TODO:
     return NULL;
@@ -136,14 +137,14 @@ char * nesGetFileName(int index)
 
 static void nes(int argc, char **argv)
 {
-    if((argc < 2) | (argc > 3))
+    if ((argc < 2) | (argc > 3))
         goto error;
     else
     {
         const char *operator = argv[1];
         if (!strcmp(operator, "list"))
         {
-            if(argc == 2)
+            if (argc == 2)
             {
                 nesListFile();
                 return;

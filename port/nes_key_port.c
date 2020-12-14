@@ -16,7 +16,7 @@
 /*             InfoNES_PadState() : Get a joypad state               */
 /*                                                                   */
 /*===================================================================*/
-void InfoNES_PadState( DWORD *pdwPad1, DWORD *pdwPad2, DWORD *pdwSystem )
+void InfoNES_PadState(DWORD *pdwPad1, DWORD *pdwPad2, DWORD *pdwSystem)
 {
     //            低位---------------------->高位
     //pdwPad1   : A键    B键   选择  开始  上  下  左  右

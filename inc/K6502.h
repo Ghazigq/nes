@@ -14,19 +14,19 @@
 
 // Type definition
 #ifndef DWORD
-typedef unsigned long  DWORD;
+    typedef unsigned long  DWORD;
 #endif
 
 #ifndef WORD
-typedef unsigned short WORD;
+    typedef unsigned short WORD;
 #endif
 
 #ifndef BYTE
-typedef unsigned char  BYTE;
+    typedef unsigned char  BYTE;
 #endif
 
 #ifndef NULL
-#define NULL 0
+    #define NULL 0
 #endif
 
 /* 6502 Flags */
@@ -56,21 +56,21 @@ typedef unsigned char  BYTE;
 // Emulator Operation
 void K6502_Init(void);
 void K6502_Reset(void);
-void K6502_Set_Int_Wiring( BYTE byNMI_Wiring, BYTE byIRQ_Wiring );
-void K6502_Step( register WORD wClocks );
+void K6502_Set_Int_Wiring(BYTE byNMI_Wiring, BYTE byIRQ_Wiring);
+void K6502_Step(register WORD wClocks);
 
 // I/O Operation (User definition)
-static inline BYTE K6502_Read( WORD wAddr);
-static inline WORD K6502_ReadW( WORD wAddr );
-static inline WORD K6502_ReadW2( WORD wAddr );
-static inline BYTE K6502_ReadZp( BYTE byAddr );
-static inline WORD K6502_ReadZpW( BYTE byAddr );
+static inline BYTE K6502_Read(WORD wAddr);
+static inline WORD K6502_ReadW(WORD wAddr);
+static inline WORD K6502_ReadW2(WORD wAddr);
+static inline BYTE K6502_ReadZp(BYTE byAddr);
+static inline WORD K6502_ReadZpW(BYTE byAddr);
 static inline BYTE K6502_ReadAbsX(void);
 static inline BYTE K6502_ReadAbsY(void);
 static inline BYTE K6502_ReadIY(void);
 
-static inline void K6502_Write( WORD wAddr, BYTE byData );
-static inline void K6502_WriteW( WORD wAddr, WORD wData );
+static inline void K6502_Write(WORD wAddr, BYTE byData);
+static inline void K6502_WriteW(WORD wAddr, WORD wData);
 
 // The state of the IRQ pin
 extern BYTE IRQ_State;

@@ -35,14 +35,14 @@ WORD NesPalette[ 64 ] =
     0x7ae7, 0x4342, 0x2769, 0x2ff3, 0x03bb, 0x0000, 0x0000, 0x0000,
     0x7fff, 0x579f, 0x635f, 0x6b3f, 0x7f1f, 0x7f1b, 0x7ef6, 0x7f75,
     0x7f94, 0x73f4, 0x57d7, 0x5bf9, 0x4ffe, 0x0000, 0x0000, 0x0000
-    
+
 };
 
 //User
 
 void nesmain(const char *name)
 {
-    if(0 != InfoNES_Load(name))
+    if (0 != InfoNES_Load(name))
     {
         InfoNES_ReleaseRom();
         return;
@@ -58,19 +58,19 @@ void nesmain(const char *name)
 /*===================================================================*/
 int InfoNES_Menu()
 {
-/*
- *  Menu screen
- *
- *  Return values
- *     0 : Normally
- *    -1 : Exit InfoNES
- */
+    /*
+     *  Menu screen
+     *
+     *  Return values
+     *     0 : Normally
+     *    -1 : Exit InfoNES
+     */
 
-  if ( PAD_PUSH( PAD_System, PAD_SYS_QUIT) )
-    return -1;	 	
+    if (PAD_PUSH(PAD_System, PAD_SYS_QUIT))
+        return -1;
 
-  // Nothing to do here
-  return 0;
+    // Nothing to do here
+    return 0;
 }
 
 
@@ -79,78 +79,78 @@ int InfoNES_Menu()
 /*               InfoNES_ReadRom() : Read ROM image file             */
 /*                                                                   */
 /*===================================================================*/
-int InfoNES_ReadRom( const char *pszFileName )
+int InfoNES_ReadRom(const char *pszFileName)
 {
-/*
- *  Read ROM image file
- *
- *  Parameters
- *    const char *pszFileName          (Read)
- *
- *  Return values
- *     0 : Normally
- *    -1 : Error
- */
+    /*
+     *  Read ROM image file
+     *
+     *  Parameters
+     *    const char *pszFileName          (Read)
+     *
+     *  Return values
+     *     0 : Normally
+     *    -1 : Error
+     */
 #ifdef PKG_NES_DOUBLE_FRAMEBUFFER
     DoubleFrame[0] = malloc(NES_DISP_WIDTH * NES_DISP_HEIGHT * sizeof(WORD));
-    if(DoubleFrame[0] == NULL)
+    if (DoubleFrame[0] == NULL)
         return -1;
     DoubleFrame[1] = malloc(NES_DISP_WIDTH * NES_DISP_HEIGHT * sizeof(WORD));
-    if(DoubleFrame[1] == NULL)
+    if (DoubleFrame[1] == NULL)
         return -1;
 #else
     WorkFrame = malloc(NES_DISP_WIDTH * NES_DISP_HEIGHT * sizeof(WORD));
-    if(WorkFrame == NULL)
+    if (WorkFrame == NULL)
         return -1;
 #endif
 
     SRAM = malloc(SRAM_SIZE * sizeof(BYTE));
-    if(SRAM == NULL)
+    if (SRAM == NULL)
         return -1;
 
     PPURAM = malloc(PPURAM_SIZE * sizeof(BYTE));
-    if(PPURAM == NULL)
+    if (PPURAM == NULL)
         return -1;
 
     SPRRAM = malloc(SPRRAM_SIZE * sizeof(BYTE));
-    if(SPRRAM == NULL)
+    if (SPRRAM == NULL)
         return -1;
 
     /* Open ROM file */
-    if(nesOpenFile(pszFileName) < 0)
+    if (nesOpenFile(pszFileName) < 0)
         return -1;
 
     /* Read ROM Header */
     nesReadFile(&NesHeader, sizeof NesHeader, 1);
 
-    if ( memcmp( NesHeader.byID, "NES\x1a", 4 ) != 0 )
+    if (memcmp(NesHeader.byID, "NES\x1a", 4) != 0)
     {
         nesCloseFile();
         return -1;
     }
 
     /* Clear SRAM */
-    memset( SRAM, 0, SRAM_SIZE );
+    memset(SRAM, 0, SRAM_SIZE);
 
     /* If trainer presents Read Triner at 0x7000-0x71ff */
-    if ( NesHeader.byInfo1 & 4 )
+    if (NesHeader.byInfo1 & 4)
         nesReadFile(&SRAM[ 0x1000 ], 512, 1);
 
     /* Allocate Memory for ROM Image */
-    ROM = (BYTE *)malloc( NesHeader.byRomSize * 0x4000 );
+    ROM = (BYTE *)malloc(NesHeader.byRomSize * 0x4000);
 
-    if(ROM == NULL)
+    if (ROM == NULL)
         return -1;
     /* Read ROM Image */
     nesReadFile(ROM, 0x4000, NesHeader.byRomSize);
-  
+
     VROM = NULL;
-    if ( NesHeader.byVRomSize > 0 )
+    if (NesHeader.byVRomSize > 0)
     {
         /* Allocate Memory for VROM Image */
-        VROM = (BYTE *)malloc( NesHeader.byVRomSize * 0x2000 );
+        VROM = (BYTE *)malloc(NesHeader.byVRomSize * 0x2000);
 
-        if(VROM == NULL)
+        if (VROM == NULL)
             return -1;
         /* Read VROM Image */
         nesReadFile(VROM, 0x2000, NesHeader.byVRomSize);
@@ -158,8 +158,8 @@ int InfoNES_ReadRom( const char *pszFileName )
 
     /* File close */
     nesCloseFile();
-  /* Successful */
-  return 0;
+    /* Successful */
+    return 0;
 }
 
 /*===================================================================*/
@@ -169,59 +169,59 @@ int InfoNES_ReadRom( const char *pszFileName )
 /*===================================================================*/
 void InfoNES_ReleaseRom()
 {
-/*
- *  Release a memory for ROM
- *
- */
+    /*
+     *  Release a memory for ROM
+     *
+     */
 #ifdef PKG_NES_DOUBLE_FRAMEBUFFER
-    if ( DoubleFrame[0] )
+    if (DoubleFrame[0])
     {
-        free( DoubleFrame[0] );
+        free(DoubleFrame[0]);
         DoubleFrame[0] = NULL;
     }
 
-    if ( DoubleFrame[1] )
+    if (DoubleFrame[1])
     {
-        free( DoubleFrame[1] );
+        free(DoubleFrame[1]);
         DoubleFrame[1] = NULL;
     }
     WorkFrame = NULL;
     WorkFrameIdx = 0;
 #else
-    if ( WorkFrame )
+    if (WorkFrame)
     {
-        free( WorkFrame );
+        free(WorkFrame);
         WorkFrame = NULL;
     }
 #endif
 
-    if ( SRAM )
+    if (SRAM)
     {
-        free( SRAM );
+        free(SRAM);
         SRAM = NULL;
     }
 
-    if ( PPURAM )
+    if (PPURAM)
     {
-        free( PPURAM );
+        free(PPURAM);
         PPURAM = NULL;
     }
 
-    if ( SPRRAM )
+    if (SPRRAM)
     {
-        free( SPRRAM );
+        free(SPRRAM);
         SPRRAM = NULL;
     }
 
-    if ( ROM )
+    if (ROM)
     {
-        free( ROM );
+        free(ROM);
         ROM = NULL;
     }
 
-    if ( VROM )
+    if (VROM)
     {
-        free( VROM );
+        free(VROM);
         VROM = NULL;
     }
 }
@@ -231,27 +231,27 @@ void InfoNES_ReleaseRom()
 /*             InfoNES_MemoryCopy() : memcpy                         */
 /*                                                                   */
 /*===================================================================*/
-void *InfoNES_MemoryCopy( void *dest, const void *src, int count )
+void *InfoNES_MemoryCopy(void *dest, const void *src, int count)
 {
-/*
- *  memcpy
- *
- *  Parameters
- *    void *dest                       (Write)
- *      Points to the starting address of the copied block's destination
- *
- *    const void *src                  (Read)
- *      Points to the starting address of the block of memory to copy
- *
- *    int count                        (Read)
- *      Specifies the size, in bytes, of the block of memory to copy
- *
- *  Return values
- *    Pointer of destination
- */
+    /*
+     *  memcpy
+     *
+     *  Parameters
+     *    void *dest                       (Write)
+     *      Points to the starting address of the copied block's destination
+     *
+     *    const void *src                  (Read)
+     *      Points to the starting address of the block of memory to copy
+     *
+     *    int count                        (Read)
+     *      Specifies the size, in bytes, of the block of memory to copy
+     *
+     *  Return values
+     *    Pointer of destination
+     */
 
-  memcpy( dest, src, count );
-  return dest;
+    memcpy(dest, src, count);
+    return dest;
 }
 
 
@@ -260,27 +260,27 @@ void *InfoNES_MemoryCopy( void *dest, const void *src, int count )
 /*             InfoNES_MemorySet() : memset                          */
 /*                                                                   */
 /*===================================================================*/
-void *InfoNES_MemorySet( void *dest, int c, int count )
+void *InfoNES_MemorySet(void *dest, int c, int count)
 {
-/*
- *  memset
- *
- *  Parameters
- *    void *dest                       (Write)
- *      Points to the starting address of the block of memory to fill
- *
- *    int c                            (Read)
- *      Specifies the byte value with which to fill the memory block
- *
- *    int count                        (Read)
- *      Specifies the size, in bytes, of the block of memory to fill
- *
- *  Return values
- *    Pointer of destination
- */
+    /*
+     *  memset
+     *
+     *  Parameters
+     *    void *dest                       (Write)
+     *      Points to the starting address of the block of memory to fill
+     *
+     *    int c                            (Read)
+     *      Specifies the byte value with which to fill the memory block
+     *
+     *    int count                        (Read)
+     *      Specifies the size, in bytes, of the block of memory to fill
+     *
+     *  Return values
+     *    Pointer of destination
+     */
 
-  memset( dest, c, count);
-  return dest;
+    memset(dest, c, count);
+    return dest;
 }
 
 /*===================================================================*/
@@ -297,10 +297,10 @@ void InfoNES_Wait()
 /*            InfoNES_MessageBox() : Print System Message            */
 /*                                                                   */
 /*===================================================================*/
-void InfoNES_MessageBox( char *pszMsg, ... )
+void InfoNES_MessageBox(char *pszMsg, ...)
 {
     va_list args;
-    va_start( args, pszMsg );
-    printf( pszMsg, args );
-    va_end( args );
+    va_start(args, pszMsg);
+    printf(pszMsg, args);
+    va_end(args);
 }

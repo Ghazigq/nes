@@ -134,7 +134,7 @@ extern BYTE PPU_UpDown_Clip;
 #define SCAN_UNKNOWN            3
 #define SCAN_VBLANK             4
 
-#define SCAN_TOP_OFF_SCREEN_START       0 
+#define SCAN_TOP_OFF_SCREEN_START       0
 #define SCAN_ON_SCREEN_START            8
 #define SCAN_BOTTOM_OFF_SCREEN_START  232
 #define SCAN_UNKNOWN_START            240
@@ -195,11 +195,11 @@ extern WORD FrameCnt;
 extern WORD FrameWait;
 
 #ifdef PKG_NES_DOUBLE_FRAMEBUFFER
-extern WORD *DoubleFrame[ 2 ];
-extern WORD *WorkFrame;
-extern WORD WorkFrameIdx;
+    extern WORD *DoubleFrame[ 2 ];
+    extern WORD *WorkFrame;
+    extern WORD WorkFrameIdx;
 #else
-extern WORD *WorkFrame;
+    extern WORD *WorkFrame;
 #endif
 
 extern BYTE ChrBuf[];
@@ -238,21 +238,21 @@ extern DWORD PAD2_Bit;
 /* Initialize Mapper */
 extern void (*MapperInit)();
 /* Write to Mapper */
-extern void (*MapperWrite)( WORD wAddr, BYTE byData );
+extern void (*MapperWrite)(WORD wAddr, BYTE byData);
 /* Write to SRAM */
-extern void (*MapperSram)( WORD wAddr, BYTE byData );
+extern void (*MapperSram)(WORD wAddr, BYTE byData);
 /* Write to APU */
-extern void (*MapperApu)( WORD wAddr, BYTE byData );
+extern void (*MapperApu)(WORD wAddr, BYTE byData);
 /* Read from Apu */
-extern BYTE (*MapperReadApu)( WORD wAddr );
+extern BYTE(*MapperReadApu)(WORD wAddr);
 /* Callback at VSync */
 extern void (*MapperVSync)();
 /* Callback at HSync */
 extern void (*MapperHSync)();
 /* Callback at PPU read/write */
-extern void (*MapperPPU)( WORD wAddr );
+extern void (*MapperPPU)(WORD wAddr);
 /* Callback at Rendering Screen 1:BG, 0:Sprite */
-extern void (*MapperRenderScreen)( BYTE byMode );
+extern void (*MapperRenderScreen)(BYTE byMode);
 
 /*-------------------------------------------------------------------*/
 /*  ROM information                                                  */
@@ -261,12 +261,12 @@ extern void (*MapperRenderScreen)( BYTE byMode );
 /* .nes File Header */
 struct NesHeader_tag
 {
-  BYTE byID[ 4 ];
-  BYTE byRomSize;
-  BYTE byVRomSize;
-  BYTE byInfo1;
-  BYTE byInfo2;
-  BYTE byReserve[ 8 ];
+    BYTE byID[ 4 ];
+    BYTE byRomSize;
+    BYTE byVRomSize;
+    BYTE byInfo1;
+    BYTE byInfo2;
+    BYTE byReserve[ 8 ];
 };
 
 /* .nes File Header */
@@ -292,7 +292,7 @@ void InfoNES_Init(void);
 void InfoNES_Fin(void);
 
 /* Load a cassette */
-int InfoNES_Load( const char *pszFileName );
+int InfoNES_Load(const char *pszFileName);
 
 /* Reset InfoNES */
 int InfoNES_Reset(void);
@@ -301,9 +301,9 @@ int InfoNES_Reset(void);
 void InfoNES_SetupPPU(void);
 
 /* Set up a Mirroring of Name Table */
-void InfoNES_Mirroring( int nType );
+void InfoNES_Mirroring(int nType);
 
-/* The main loop of InfoNES */ 
+/* The main loop of InfoNES */
 void InfoNES_Main(void);
 
 /* The loop of emulation */

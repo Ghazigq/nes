@@ -24,15 +24,15 @@ static struct rt_device_graphic_info info;
 /*===================================================================*/
 void InfoNES_LoadFrame()
 {
-/*
- *  Transfer the contents of work frame on the screen
- *
- */
-    #include <lcd_spi_port.h>
+    /*
+     *  Transfer the contents of work frame on the screen
+     *
+     */
+#include <lcd_spi_port.h>
     struct rt_device_rect_info rect_info;
     WORD *wColor = WorkFrame;
 
-    if(!nes_lcd_is_init)
+    if (!nes_lcd_is_init)
     {
         lcd_device = rt_device_find("lcd");
         RT_ASSERT(lcd_device != RT_NULL);
@@ -45,15 +45,15 @@ void InfoNES_LoadFrame()
     rect_info.width = NES_DISP_WIDTH;
     rect_info.height = NES_DISP_HEIGHT;
 
-    for(int y = rect_info.y;y < rect_info.y + rect_info.height;y ++)
+    for (int y = rect_info.y; y < rect_info.y + rect_info.height; y ++)
     {
-        for(int x = rect_info.x;x < rect_info.x + rect_info.width;x ++)
+        for (int x = rect_info.x; x < rect_info.x + rect_info.width; x ++)
         {
             wColor ++;
             /* Exchange 16-bit to 24-bit  RGB565 to RGB888*/
-            info.framebuffer[3*(x + y*info.width)] = ((*wColor & 0xf800) >> 10) << 3;
-            info.framebuffer[3*(x + y*info.width) + 1] = ((*wColor & 0x07e0) >> 5) << 3;
-            info.framebuffer[3*(x + y*info.width) + 2] = (*wColor & 0x001f) << 3;
+            info.framebuffer[3 * (x + y * info.width)] = ((*wColor & 0xf800) >> 10) << 3;
+            info.framebuffer[3 * (x + y * info.width) + 1] = ((*wColor & 0x07e0) >> 5) << 3;
+            info.framebuffer[3 * (x + y * info.width) + 2] = (*wColor & 0x001f) << 3;
         }
     }
     rt_device_control(lcd_device, RTGRAPHIC_CTRL_RECT_UPDATE, &rect_info);
